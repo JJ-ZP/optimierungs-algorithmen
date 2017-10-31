@@ -21,6 +21,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JToggleButton;
 import javax.swing.SwingUtilities;
 
+import aStar.BuildBox;
 import aStar.City;
 
 public class GuiFrame extends JFrame{
@@ -29,7 +30,7 @@ public class GuiFrame extends JFrame{
 	public static final int CITY_SIZE = 32;
 	
 	private JPanel map;
-	private JPanel buildbox;
+	private BuildBox buildbox;
 	private JPanel playbox;
 	private JTabbedPane toolbox;
 	private JSplitPane splitpane;
@@ -44,7 +45,7 @@ public class GuiFrame extends JFrame{
 		
 		//Stuff
 		map = new JPanel();
-		buildbox = new JPanel();
+		buildbox = new BuildBox();
 		playbox = new JPanel();
 		toolbox = new JTabbedPane(JTabbedPane.TOP);
 		
@@ -64,56 +65,6 @@ public class GuiFrame extends JFrame{
 		toolbox.addTab("Bearbeiten", buildbox);
 		toolbox.addTab("Simulieren", playbox);
 		toolbox.setFont(new Font(null, Font.PLAIN, 23));
-		
-		ButtonGroup tools = new ButtonGroup();
-		JToggleButton move = new JToggleButton("Stadt bewegen");
-		move.setSelected(true);
-		move.setFont(new Font(null, Font.PLAIN, 18));
-		move.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				EditMode.current = EditMode.MOVE;
-			}
-		});
-		tools.add(move);
-		JToggleButton createCity = new JToggleButton("Stadt erstellen");
-		createCity.setFont(new Font(null, Font.PLAIN, 18));
-		createCity.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				EditMode.current = EditMode.ADDCITY;
-			}
-		});
-		tools.add(createCity);
-		JToggleButton deleteCity = new JToggleButton("Stadt löschen");
-		deleteCity.setFont(new Font(null, Font.PLAIN, 18));
-		deleteCity.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				EditMode.current = EditMode.REMOVECITY;
-			}
-		});
-		tools.add(deleteCity);
-		JToggleButton modifyConnections = new JToggleButton("Verbindungen bearbeiten");
-		modifyConnections.setFont(new Font(null, Font.PLAIN, 18));
-		modifyConnections.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				EditMode.current = EditMode.MODIFYCONNECTION;
-			}
-		});
-		tools.add(modifyConnections);
-		
-		buildbox.add(move);
-		buildbox.add(Box.createRigidArea(new Dimension(0, 10)));
-		buildbox.add(createCity);
-		buildbox.add(Box.createRigidArea(new Dimension(0, 10)));
-		buildbox.add(deleteCity);
-		buildbox.add(Box.createRigidArea(new Dimension(0, 10)));
-		buildbox.add(modifyConnections);
-		buildbox.add(Box.createRigidArea(new Dimension(0, 10)));
-		buildbox.add(new JSeparator());
-		buildbox.setLayout(new BoxLayout(buildbox, BoxLayout.Y_AXIS));
 		
 		scrollpane = new JScrollPane(map);
 		splitpane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, scrollpane, toolbox);
