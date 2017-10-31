@@ -8,6 +8,9 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JFrame;
 import javax.swing.LayoutStyle.ComponentPlacement;
+
+import aStar.julian.EditMode;
+
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
 
@@ -23,26 +26,34 @@ public class BuildBox extends JPanel {
 	ConfigBox panel;
 	GroupLayout groupLayout;
 	
-	public static void main(String[] args) {
-		JFrame frame = new JFrame();
-		frame.setBounds(10, 10, 200, 230);
-		
-		BuildBox box = new BuildBox();
-		frame.getContentPane().add(box);
-		
-		frame.setVisible(true);
-	}
-	
 	/**
 	 * Create the panel.
 	 */
 	public BuildBox() {
 		
 		btnMove = new JToggleButton("MOVE");
+		btnMove.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent arg0) {
+				if (arg0.getStateChange() == ItemEvent.SELECTED)
+					EditMode.current = EditMode.MOVE;
+			}
+		});
 		
 		btnAdd = new JToggleButton("ADD");
+		btnAdd.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent arg0) {
+				if (arg0.getStateChange() == ItemEvent.SELECTED)
+					EditMode.current = EditMode.ADDCITY;
+			}
+		});
 		
 		btnDel = new JToggleButton("DEL");
+		btnDel.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				if (e.getStateChange() == ItemEvent.SELECTED)
+					EditMode.current = EditMode.REMOVECITY;
+			}
+		});
 		
 		btnConf = new JToggleButton("CONF");
 		btnConf.addItemListener(new ItemListener() {
@@ -50,6 +61,7 @@ public class BuildBox extends JPanel {
 				if (arg0.getStateChange() == ItemEvent.SELECTED) {
 					panel.setVisible(true);
 					separator.setVisible(true);
+					EditMode.current = EditMode.MODIFYCONNECTION;
 				}
 				else if (arg0.getStateChange() == ItemEvent.DESELECTED) {
 					panel.setVisible(false);
@@ -101,6 +113,7 @@ public class BuildBox extends JPanel {
 						.addComponent(btnMove)
 						.addComponent(btnAdd))
 					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGap(8)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnDel)
 						.addComponent(btnConf))
