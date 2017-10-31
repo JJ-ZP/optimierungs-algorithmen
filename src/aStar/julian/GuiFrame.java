@@ -23,6 +23,7 @@ import javax.swing.SwingUtilities;
 
 import aStar.BuildBox;
 import aStar.City;
+import aStar.PlayBox;
 
 public class GuiFrame extends JFrame{
 
@@ -31,7 +32,7 @@ public class GuiFrame extends JFrame{
 	
 	private JPanel map;
 	private BuildBox buildbox;
-	private JPanel playbox;
+	private PlayBox playbox;
 	private JTabbedPane toolbox;
 	private JSplitPane splitpane;
 	private JScrollPane scrollpane;
@@ -46,7 +47,7 @@ public class GuiFrame extends JFrame{
 		//Stuff
 		map = new JPanel();
 		buildbox = new BuildBox();
-		playbox = new JPanel();
+		playbox = new PlayBox();
 		toolbox = new JTabbedPane(JTabbedPane.TOP);
 		
 		map.setPreferredSize(new Dimension(10000, 10000));
@@ -64,7 +65,7 @@ public class GuiFrame extends JFrame{
 		
 		toolbox.addTab("Bearbeiten", buildbox);
 		toolbox.addTab("Simulieren", playbox);
-		toolbox.setFont(new Font(null, Font.PLAIN, 23));
+		toolbox.setFont(new Font(null, Font.PLAIN, 15));
 		
 		scrollpane = new JScrollPane(map);
 		splitpane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, scrollpane, toolbox);
@@ -82,7 +83,7 @@ public class GuiFrame extends JFrame{
 					Thread.sleep(50); 
 					//Um den Programm Zeit zu geben um die Größen zu berechnen und einen Bug zu umgehen
 				} catch (InterruptedException e) {  }
-            	splitpane.setDividerLocation(0.6);
+            	splitpane.setDividerLocation(0.8);
             	scrollpane.getVerticalScrollBar().setValue(scrollpane.getVerticalScrollBar().getMaximum()/2);
             	scrollpane.getHorizontalScrollBar().setValue(scrollpane.getHorizontalScrollBar().getMaximum()/2);
             }
