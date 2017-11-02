@@ -1,16 +1,10 @@
 package aStar;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.HashMap;
-
 import javax.swing.JButton;
-import javax.swing.JPanel;
-
+import javax.swing.JLayeredPane;
 import aStar.Logger.Level;
 import aStar.julian.EditMode;
 import aStar.julian.GuiFrame;
@@ -19,18 +13,20 @@ import aStar.julian.GuiFrame;
 public class City extends JButton{
 
 	//private static HashMap<City, Integer> distances
+	public static City connectionStart;
 	public enum PaintMode{
-		DEFAULT, GLOW, GLOWINGTRACKS
+		DEFAULT, GLOW, GLOWINGTRACKS, SELECTED
 	}
 	
 	public final long ID;
 	static long currentID = 0;
 	
+	
 //	private int posX;
 //	private int posY;
 	private ArrayList<Connection> connections;
 	
-	private JPanel map;
+	private JLayeredPane map;
 	
 	public City(int posX , int posY) {
 		this.setLocation(posX, posY);
@@ -43,8 +39,25 @@ public class City extends JButton{
 		this.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(EditMode.current == EditMode.REMOVECITY) {
+				switch (EditMode.current) {
+				case ADDCITY:
+					break;
+				case MODIFYCONNECTION:
+					if(connectionStart == null) {
+						connectionStart = City.this;
+					}else {
+						if(map != null) {
+							//TODO: connection bearbeitungs screen hinzufügen
+						}
+					}
+					break;
+				case MOVE:
+					break;
+				case REMOVECITY:
 					deleteCity();
+					break;
+				default:
+					break;
 				}
 			}
 		});
@@ -53,6 +66,7 @@ public class City extends JButton{
 	public void deleteCity() {
 		for (Connection connection : connections) {
 			connection.getCity().removeConnection(this);
+			connection.delete();
 		}
 		if(map != null) {
 			map.remove(City.this);		
@@ -60,11 +74,18 @@ public class City extends JButton{
 		}
 	}
 	
-	public void displayOn(JPanel map) {
+	public void displayOn(JLayeredPane map) {
 		Logger.log(Level.INFO, "Füge Stadt "+this.toString()+"("+this.getX()+", "+this.getY()+") zu Map hinzu.");
+		if(this.map != null) {
+			this.map.remove(this);		
+			this.map.repaint();
+		}
 		this.map = map;
-		this.map.add(this);
+		this.map.add(this, new Integer(12));
 		this.map.repaint();
+		for (Connection connection : connections) {
+			connection.displayOn(map);
+		}
 	}
 	
 	public int getDistance(City city){
@@ -84,6 +105,8 @@ public class City extends JButton{
 	public void addConnection(Connection conn) {
 		if (!connections.contains(conn)) {
 			connections.add(conn);
+			if(this.map != null)
+				conn.displayOn(this.map);
 		}
 	}
 	
@@ -102,19 +125,28 @@ public class City extends JButton{
 	}
 		
 	public int[] getConnectionPoint(City city) {
+		//TODO: Bessere Berechnung, für schönere Verbindungen
 		int posX = getX() + GuiFrame.CITY_SIZE / 2;
 		int posY = getY() + GuiFrame.CITY_SIZE / 2;
-		if(city.getX() > this.getX())
-			posY += GuiFrame.CITY_SIZE / 4;
-		else
-			posY -= GuiFrame.CITY_SIZE / 4;
+		int otherX = city.getX() + GuiFrame.CITY_SIZE / 2;
+		int otherY = city.getY() + GuiFrame.CITY_SIZE / 2;
+//		if(city.getY() > this.getY()) {
+//			posY += GuiFrame.CITY_SIZE / 4;
+//			otherY -= GuiFrame.CITY_SIZE / 4;
+//		} else {
+//			posY -= GuiFrame.CITY_SIZE / 4;
+//			otherY += GuiFrame.CITY_SIZE / 4;
+//		}
+//		
+//		if(city.getX() > this.getX()) {
+//			posX += GuiFrame.CITY_SIZE / 4;
+//			otherX += GuiFrame.CITY_SIZE / 4;
+//		} else {
+//			posX -= GuiFrame.CITY_SIZE / 4;
+//			otherX -= GuiFrame.CITY_SIZE / 4;
+//		}
 		
-		if(city.getY() > this.getY())
-			posX += GuiFrame.CITY_SIZE / 4;
-		else
-			posX -= GuiFrame.CITY_SIZE / 4;
-		
-		return new int[]{posX, posY};
+		return new int[]{posX, posY, otherX, otherY};
 	}
 	
 	@Override

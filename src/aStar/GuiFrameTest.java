@@ -6,13 +6,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JFrame;
+import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
@@ -21,8 +20,6 @@ import javax.swing.JTabbedPane;
 import javax.swing.JToggleButton;
 import javax.swing.SwingUtilities;
 
-import aStar.Logger.Level;
-import aStar.julian.CsvReader;
 import aStar.julian.EditMode;
 
 public class GuiFrameTest extends JFrame{
@@ -30,7 +27,7 @@ public class GuiFrameTest extends JFrame{
 	private static final long serialVersionUID = -1087604873196301874L;
 	public static final int CITY_SIZE = 32;
 	
-	private JPanel map;
+	private JLayeredPane map;
 	private JPanel buildbox;
 	private JPanel playbox;
 	private JTabbedPane toolbox;
@@ -45,7 +42,7 @@ public class GuiFrameTest extends JFrame{
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
 		//Stuff
-		map = new JPanel();
+		map = new JLayeredPane();
 		buildbox = new JPanel();
 		playbox = new JPanel();
 		toolbox = new JTabbedPane(JTabbedPane.TOP);

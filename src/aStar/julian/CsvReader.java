@@ -45,7 +45,7 @@ public class CsvReader {
 					int cost = Integer.parseInt(elements[2]);
 					Connection conn = new Connection(cities.get(from), cities.get(to), cost);
 					cities.get(from).addConnection(conn);
-					Logger.log(Level.INFO, "New Connection: -start City ID: " + cities.get(from).ID + 
+					Logger.log(Level.DEBUG, "New Connection: -start City ID: " + cities.get(from).ID + 
 							", -traget City ID: "+ cities.get(to).ID + 
 							", Cost: " + cost);
 				}catch (IndexOutOfBoundsException e) {

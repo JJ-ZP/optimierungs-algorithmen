@@ -6,12 +6,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
@@ -22,13 +25,15 @@ import javax.swing.JToggleButton;
 import javax.swing.SwingUtilities;
 
 import aStar.City;
+import aStar.Logger;
+import aStar.Logger.Level;
 
 public class GuiFrame extends JFrame{
 
 	private static final long serialVersionUID = -1087604873196301874L;
 	public static final int CITY_SIZE = 32;
 	
-	private JPanel map;
+	private JLayeredPane map;
 	private JPanel buildbox;
 	private JPanel playbox;
 	private JTabbedPane toolbox;
@@ -43,7 +48,7 @@ public class GuiFrame extends JFrame{
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
 		//Stuff
-		map = new JPanel();
+		map = new JLayeredPane();
 		buildbox = new JPanel();
 		playbox = new JPanel();
 		toolbox = new JTabbedPane(JTabbedPane.TOP);
@@ -138,7 +143,24 @@ public class GuiFrame extends JFrame{
         });
     }
 	
+	public void addCity(City city) {
+		city.displayOn(map);
+	}
+	
 	public static void main(String[] args) {
-		new GuiFrame();
+		Logger.setLevel(Level.DEBUG);
+		
+		GuiFrame frame = new GuiFrame();
+		
+		ArrayList<City> cities = null;
+		try {
+			cities = CsvReader.readCities("src/Test.csv" , ",");
+		} catch (IOException e) {
+			Logger.log(Level.ERROR, e.getMessage());
+		}
+		
+		for (City city : cities) {
+			frame.addCity(city);
+		}
 	}
 }
