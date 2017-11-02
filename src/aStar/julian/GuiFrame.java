@@ -13,9 +13,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import aStar.BuildBox;
 import aStar.City;
+import aStar.City.PaintMode;
 import aStar.Logger;
 import aStar.Logger.Level;
 import aStar.PlayBox;
@@ -31,6 +34,8 @@ public class GuiFrame extends JFrame{
 	private JTabbedPane toolbox;
 	private JSplitPane splitpane;
 	private JScrollPane scrollpane;
+	
+	private EditMode lastmode;
 	
 	public GuiFrame() {
 		
@@ -54,6 +59,13 @@ public class GuiFrame extends JFrame{
 				if(EditMode.current == EditMode.ADDCITY) {
 					City c = new City(me.getX() - CITY_SIZE / 2, me.getY() - CITY_SIZE / 2);
 					c.displayOn(map);
+				}else if(EditMode.current == EditMode.MOVE) {
+					if(City.lastSelected != null) {
+						City.lastSelected.setLocation(me.getX() - CITY_SIZE / 2, me.getY() - CITY_SIZE / 2);
+						City.lastSelected.setPaintMode(PaintMode.DEFAULT);
+						City.lastSelected = null;
+						map.repaint();
+					}
 				}
 			}
 		});
@@ -61,6 +73,27 @@ public class GuiFrame extends JFrame{
 		toolbox.addTab("Bearbeiten", buildbox);
 		toolbox.addTab("Simulieren", playbox);
 		toolbox.setFont(new Font(null, Font.PLAIN, 15));
+		
+		toolbox.addChangeListener(new ChangeListener() {
+	        public void stateChanged(ChangeEvent e) {
+	            if(toolbox.getSelectedIndex() == 1) {
+	            	if(EditMode.current == EditMode.MODIFYCONNECTION)
+	            		buildbox.panel.removeCities();
+	            	if(City.lastSelected != null)
+	            		City.lastSelected.setPaintMode(PaintMode.DEFAULT);
+	            	lastmode = EditMode.current;
+	            	EditMode.current = EditMode.PLAY;
+	            } else {
+	            	EditMode.current = lastmode;
+	            	if(City.solution != null) {
+	            		City.startCity = null;
+	            		City.targetCity = null;
+	            		City.solution.unMark();
+	            		City.solution = null;
+	            	}
+	            }
+	        }
+	    });
 		
 		scrollpane = new JScrollPane(map);
 		splitpane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, scrollpane, toolbox);

@@ -3,6 +3,8 @@ package aStar;
 import java.util.ArrayList;
 import java.util.PriorityQueue;
 
+import aStar.City.PaintMode;
+
 public class Track {
 	
 	private Track previousTrack;
@@ -45,7 +47,7 @@ public class Track {
 		openList.remove(this);
 		
 		for (Connection connection : this.currentCity.getConnections()) {
-			City city = connection.getCity();
+			City city = connection.getTargetCity();
 			if (!contains(city))
 				openList.add(new Track(city, this, this.costs + connection.getCost()));
 		}
@@ -55,7 +57,7 @@ public class Track {
 		ArrayList<Track> tracks = new ArrayList<>();
 		
 		for (Connection connection : this.currentCity.getConnections()) {
-			City city = connection.getCity();
+			City city = connection.getTargetCity();
 			if (!contains(city))
 				tracks.add(new Track(city, this, this.costs + connection.getCost()));
 		}
@@ -80,6 +82,24 @@ public class Track {
 			return previousTrack.toString() + ", " + currentCity.toString(); 
 		else
 			return currentCity.toString();
+	}
+	
+	public void mark() {
+		if(previousTrack != null) {
+			previousTrack.currentCity.getConnectionTo(currentCity).setPaintMode(PaintMode.GLOW);
+			currentCity.setPaintMode(PaintMode.GLOWINGTRACKS);
+			previousTrack.mark();
+		}else
+			currentCity.setPaintMode(PaintMode.GLOW);
+	}
+	
+	public void unMark() {
+		if(previousTrack != null) {
+			previousTrack.currentCity.getConnectionTo(currentCity).setPaintMode(PaintMode.DEFAULT);
+			currentCity.setPaintMode(PaintMode.DEFAULT);
+			previousTrack.unMark();
+		}else
+			currentCity.setPaintMode(PaintMode.DEFAULT);
 	}
 	
 }

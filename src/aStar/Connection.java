@@ -8,6 +8,7 @@ import java.awt.Rectangle;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
+import aStar.City.PaintMode;
 import aStar.Logger.Level;
 import aStar.julian.GuiFrame;
 
@@ -17,6 +18,7 @@ public class Connection extends JPanel{
 	private City startCity;
 	private int cost;
 	private JLayeredPane map;
+	private PaintMode paintMode = PaintMode.DEFAULT;
 	
 	public Connection(City startCity, City targetCity, int cost) {
 		this.setOpaque(false);
@@ -24,6 +26,7 @@ public class Connection extends JPanel{
 		this.setStartCity(startCity);
 		this.setCost(cost);
 		this.calculateBounds();
+		targetCity.isNowTargetedBy(this);
 	}
 
 	public void delete() {
@@ -31,6 +34,7 @@ public class Connection extends JPanel{
 			map.remove(this);
 			map.repaint();
 		}
+		targetCity.isNotLongerTargetedBy(this);
 	}
 	
 	public void displayOn(JLayeredPane map) {
@@ -52,7 +56,7 @@ public class Connection extends JPanel{
 		this.repaint();
 	}
 	
-	public City getCity() {
+	public City getTargetCity() {
 		return targetCity;
 	}
 
@@ -76,10 +80,29 @@ public class Connection extends JPanel{
 		this.startCity = startCity;
 	}
 	
+	public void setPaintMode(PaintMode paintMode) {
+		this.paintMode = paintMode;
+		this.repaint();
+	}
+	
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
+		this.calculateBounds();
 		int[] start = startCity.getConnectionPoint(targetCity);
+		
+		switch(paintMode) {
+			case GLOW:
+				g.setColor(Color.RED);
+				break;
+			case SELECTED:
+				g.setColor(Color.GRAY);
+				break;
+			default:
+				g.setColor(Color.BLACK);
+				break;
+		}
+		
 		g.drawLine(start[0] - getX(), start[1] - getY(), start[2] - getX(), start[3] - getY());
 //		if(Logger.getLevel() == Level.DEBUG) {
 //			g.setColor(Color.GREEN);

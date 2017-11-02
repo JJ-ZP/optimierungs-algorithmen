@@ -2,10 +2,17 @@ package aStar;
 
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
+
+import aStar.City.PaintMode;
 
 public class PlayBox extends JPanel {
 
@@ -15,6 +22,19 @@ public class PlayBox extends JPanel {
 	public PlayBox() {
 		
 		JButton btnSimulate = new JButton("calculate");
+		btnSimulate.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(City.startCity != null && City.targetCity != null) {
+					AStarAlgorithm aStar = new AStarAlgorithm(City.startCity, City.targetCity);
+					City.solution = aStar.solveAll();
+					City.solution.mark();
+					City.targetCity.setPaintMode(PaintMode.GLOW);
+				}else
+					JOptionPane.showMessageDialog(PlayBox.this.getParent().getParent(),
+							"Bitte wähle zuerst 2 Städte aus");
+			}
+		});
 		
 		JSeparator separator = new JSeparator();
 		

@@ -9,6 +9,7 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JFrame;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
+import aStar.City.PaintMode;
 import aStar.julian.EditMode;
 
 import java.awt.event.ItemListener;
@@ -23,7 +24,7 @@ public class BuildBox extends JPanel {
 	
 	ButtonGroup buttonGroup;
 	JSeparator separator;
-	ConfigBox panel;
+	public ConfigBox panel;
 	GroupLayout groupLayout;
 	
 	/**
@@ -36,8 +37,15 @@ public class BuildBox extends JPanel {
 			public void itemStateChanged(ItemEvent arg0) {
 				if (arg0.getStateChange() == ItemEvent.SELECTED)
 					EditMode.current = EditMode.MOVE;
+				else if (arg0.getStateChange() == ItemEvent.DESELECTED) {
+					if(City.lastSelected != null) {
+						City.lastSelected.setPaintMode(PaintMode.DEFAULT);
+						City.lastSelected = null;
+					}
+				}
 			}
 		});
+		btnMove.setSelected(true);
 		
 		btnAdd = new JToggleButton("ADD");
 		btnAdd.addItemListener(new ItemListener() {
@@ -64,6 +72,8 @@ public class BuildBox extends JPanel {
 					EditMode.current = EditMode.MODIFYCONNECTION;
 				}
 				else if (arg0.getStateChange() == ItemEvent.DESELECTED) {
+					City.lastSelected = null;
+					panel.removeCities();
 					panel.setVisible(false);
 					separator.setVisible(false);
 				}
