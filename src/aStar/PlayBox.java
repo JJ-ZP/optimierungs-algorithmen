@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 import aStar.City.PaintMode;
+import aStar.Logger.Level;
 
 public class PlayBox extends JPanel {
 

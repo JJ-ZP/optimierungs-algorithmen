@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.PriorityQueue;
 
 import aStar.City.PaintMode;
+import aStar.Logger.Level;
 
 public class Track {
 	

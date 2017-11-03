@@ -20,8 +20,9 @@ public class AStarAlgorithm {
 
 			@Override
 			public int compare(Track t1, Track t2) {
-				return (t1.getCosts() + t1.getCurrentCity().getDistance(targetCity)) -
-						(t2.getCosts() + t2.getCurrentCity().getDistance(targetCity));
+				if (t1.getCosts() == t2.getCosts())
+					return (t1.getCurrentCity().getDistance(targetCity) - t2.getCurrentCity().getDistance(targetCity));
+				return (t1.getCosts() - t2.getCosts());
 			}
 		});
 	}

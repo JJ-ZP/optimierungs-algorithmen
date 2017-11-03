@@ -14,6 +14,8 @@ import java.awt.event.ItemEvent;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 import aStar.City.PaintMode;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
 
 public class ConfigBox extends JPanel {
 
@@ -40,51 +42,21 @@ public class ConfigBox extends JPanel {
 		label = new JLabel("Wert:");
 		
 		spinner = new JSpinner();
+		spinner.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				if (startCity != null && targetCity != null && targetToStart != null)
+					targetCity.getConnectionTo(startCity).setCost((int)spinner.getValue());
+			}
+		});
 		spinner.setModel(model);
 		
-		checkBox = new JCheckBox("A   -->   B");
+		checkBox = new JCheckBox("A   <--   B");
 		checkBox.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				if (e.getStateChange() == ItemEvent.SELECTED) {
 					spinner.setEnabled(true);
 					label.setEnabled(true);
 					checkBox.setForeground(Color.BLACK);
-					if(startToTarget == null) {
-						startToTarget = new Connection(startCity, targetCity, 1);
-						startCity.addConnection(startToTarget);
-						startToTarget.setPaintMode(PaintMode.SELECTED);
-						spinner.setValue(1);
-					} else {
-						spinner.setValue(startToTarget.getCost());
-					}
-				}
-				else if (e.getStateChange() == ItemEvent.DESELECTED) {
-					spinner.setEnabled(false);
-					label.setEnabled(false);
-					checkBox.setForeground(new Color(128, 128, 128));
-					if(startToTarget == null) {
-						spinner.setValue(1);
-					} else {
-						startToTarget = null;
-						startCity.removeConnection(targetCity);
-						spinner.setValue(1);
-					}
-				}
-			}
-		});
-		
-		label_1 = new JLabel("Wert:");
-		
-		spinner_1 = new JSpinner();
-		spinner_1.setModel(model2);
-		
-		checkBox_1 = new JCheckBox("A   <--   B");
-		checkBox_1.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent e) {
-				if (e.getStateChange() == ItemEvent.SELECTED) {
-					spinner_1.setEnabled(true);
-					label_1.setEnabled(true);
-					checkBox_1.setForeground(Color.BLACK);
 					if(targetToStart == null) {
 						targetToStart = new Connection(targetCity, startCity, 1);
 						targetCity.addConnection(targetToStart);
@@ -95,14 +67,57 @@ public class ConfigBox extends JPanel {
 					}
 				}
 				else if (e.getStateChange() == ItemEvent.DESELECTED) {
-					spinner_1.setEnabled(false);
-					label_1.setEnabled(false);
-					checkBox_1.setForeground(new Color(128, 128, 128));
+					spinner.setEnabled(false);
+					label.setEnabled(false);
+					checkBox.setForeground(new Color(128, 128, 128));
 					if(targetToStart == null) {
 						spinner.setValue(1);
 					} else {
 						targetToStart = null;
 						targetCity.removeConnection(startCity);
+						spinner.setValue(1);
+					}
+				}
+			}
+		});
+		
+		label_1 = new JLabel("Wert:");
+		
+		spinner_1 = new JSpinner();
+		spinner_1.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent arg0) {
+				if (startCity != null && targetCity != null && startToTarget != null)
+					startCity.getConnectionTo(targetCity).setCost((int)spinner_1.getValue());
+			}
+		});
+		
+		spinner_1.setModel(model2);
+		
+		checkBox_1 = new JCheckBox("A   -->   B");
+		checkBox_1.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				if (e.getStateChange() == ItemEvent.SELECTED) {
+					spinner_1.setEnabled(true);
+					label_1.setEnabled(true);
+					checkBox_1.setForeground(Color.BLACK);
+					if(startToTarget == null) {
+						startToTarget = new Connection(startCity, targetCity, 1);
+						startCity.addConnection(startToTarget);
+						startToTarget.setPaintMode(PaintMode.SELECTED);
+						spinner_1.setValue(1);
+					} else {
+						spinner_1.setValue(startToTarget.getCost());
+					}
+				}
+				else if (e.getStateChange() == ItemEvent.DESELECTED) {
+					spinner_1.setEnabled(false);
+					label_1.setEnabled(false);
+					checkBox_1.setForeground(new Color(128, 128, 128));
+					if(startToTarget == null) {
+						spinner.setValue(1);
+					} else {
+						startToTarget = null;
+						startCity.removeConnection(targetCity);
 						spinner.setValue(1);
 					}
 				}
@@ -174,8 +189,8 @@ public class ConfigBox extends JPanel {
 		this.targetCity = null;
 		this.startToTarget = null;
 		this.targetToStart = null;
-		checkBox.setText("A   -->   B");
-		checkBox_1.setText("A   <--   B");
+		checkBox_1.setText("A   -->   B");
+		checkBox.setText("A   <--   B");
 		checkBox.setSelected(false);
 		checkBox_1.setSelected(false);
 		checkBox.setEnabled(false);
@@ -186,20 +201,26 @@ public class ConfigBox extends JPanel {
 	public void setCities(City startCity, City targetCity) {
 		this.startCity = startCity;
 		this.targetCity = targetCity;
-		this.checkBox.setText(startCity.ID + makeSpaces(startCity.ID) +
-				" --> " + makeSpaces(targetCity.ID) + targetCity.ID);
 		this.checkBox_1.setText(startCity.ID + makeSpaces(startCity.ID) +
+				" --> " + makeSpaces(targetCity.ID) + targetCity.ID);
+		this.checkBox.setText(startCity.ID + makeSpaces(startCity.ID) +
 				" <-- " + makeSpaces(targetCity.ID) + targetCity.ID);
 		this.startToTarget = startCity.getConnectionTo(targetCity);
 		this.targetToStart = targetCity.getConnectionTo(startCity);
-		if(startToTarget != null) {
-			checkBox.setSelected(true);
+		if(this.startToTarget != null) {
+			spinner_1.setValue(startToTarget.getCost());
+			checkBox_1.setSelected(true);
 			startToTarget.setPaintMode(PaintMode.SELECTED);
 		}
-		if(targetToStart != null) {
-			checkBox_1.setSelected(true);
+		else
+			spinner_1.setValue(1);
+		if(this.targetToStart != null) {
+			spinner.setValue(targetToStart.getCost());
+			checkBox.setSelected(true);
 			targetToStart.setPaintMode(PaintMode.SELECTED);
 		}
+		else
+			spinner.setValue(1);
 		this.checkBox.setEnabled(true);
 		this.checkBox_1.setEnabled(true);
 		startCity.setPaintMode(PaintMode.SELECTED);
@@ -210,8 +231,8 @@ public class ConfigBox extends JPanel {
 	public void setStartCity(City startCity) {
 		removeCities();
 		this.startCity = startCity;
-		checkBox.setText(startCity.ID + makeSpaces(startCity.ID) + " -->   B");
-		checkBox_1.setText(startCity.ID + makeSpaces(startCity.ID) + " <--   B");
+		checkBox_1.setText(startCity.ID + makeSpaces(startCity.ID) + " -->   B");
+		checkBox.setText(startCity.ID + makeSpaces(startCity.ID) + " <--   B");
 		startCity.setPaintMode(PaintMode.SELECTED);
 		this.repaint();
 	}
