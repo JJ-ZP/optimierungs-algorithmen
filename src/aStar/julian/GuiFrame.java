@@ -127,7 +127,7 @@ public class GuiFrame extends JFrame{
 		
 		GuiFrame frame = new GuiFrame();
 		
-		ArrayList<City> cities = null;
+		/*ArrayList<City> cities = null;
 		try {
 			cities = CsvReader.readCities("src/Test.csv" , ",");
 		} catch (IOException e) {
@@ -136,6 +136,6 @@ public class GuiFrame extends JFrame{
 		
 		for (City city : cities) {
 			frame.addCity(city);
-		}
+		}*/
 	}
 }
