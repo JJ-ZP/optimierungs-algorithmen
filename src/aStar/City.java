@@ -199,55 +199,55 @@ public class City extends JButton{
 		int posY = getY() + GuiFrame.CITY_SIZE / 2;
 		int otherX = city.getX() + GuiFrame.CITY_SIZE / 2;
 		int otherY = city.getY() + GuiFrame.CITY_SIZE / 2;
-		int deltaX = posX - otherX;
-		int deltaY = posY - otherY;
-		
-		if(Math.abs(deltaX) > Math.abs(deltaY)) {
-			if(city.getX() > this.getX()) {
-				if(city.getY() > this.getY()) {
-					posY += GuiFrame.CITY_SIZE / 16;
-					otherY += GuiFrame.CITY_SIZE / 16;
-				} else {
-					posY -= GuiFrame.CITY_SIZE / 16;
-					otherY -= GuiFrame.CITY_SIZE / 16;
-				}
-				posX += GuiFrame.CITY_SIZE / 2;
-				otherX -= GuiFrame.CITY_SIZE / 2; 
-			} else {
-				if(city.getY() > this.getY()) {
-					posY += GuiFrame.CITY_SIZE / 16;
-					otherY += GuiFrame.CITY_SIZE / 16;
-				} else {
-					posY -= GuiFrame.CITY_SIZE / 16;
-					otherY -= GuiFrame.CITY_SIZE / 16;
-				}
-				posX -= GuiFrame.CITY_SIZE / 2;
-				otherX += GuiFrame.CITY_SIZE / 2;	
-			}
-		} else {
-			if(city.getY() > this.getY()) {
-				if(city.getX() > this.getX()) {
-					posX += GuiFrame.CITY_SIZE / 16;
-					otherX += GuiFrame.CITY_SIZE / 16;
-				} else {
-					posX -= GuiFrame.CITY_SIZE / 16;
-					otherX -= GuiFrame.CITY_SIZE / 16;
-				}
-				posY += GuiFrame.CITY_SIZE / 2;
-				otherY -= GuiFrame.CITY_SIZE / 2; 
-			} else {
-				if(city.getX() > this.getX()) {
-					posX += GuiFrame.CITY_SIZE / 16;
-					otherX += GuiFrame.CITY_SIZE / 16;
-				} else {
-					posX -= GuiFrame.CITY_SIZE / 16;
-					otherX -= GuiFrame.CITY_SIZE / 16;
-				}
-				posY -= GuiFrame.CITY_SIZE / 2;
-				otherY += GuiFrame.CITY_SIZE / 2;	
-			}
-		}
-		
+//		int deltaX = posX - otherX;
+//		int deltaY = posY - otherY;
+//		
+//		if(Math.abs(deltaX) > Math.abs(deltaY)) {
+//			if(city.getX() > this.getX()) {
+//				if(city.getY() > this.getY()) {
+//					posY += GuiFrame.CITY_SIZE / 16;
+//					otherY += GuiFrame.CITY_SIZE / 16;
+//				} else {
+//					posY -= GuiFrame.CITY_SIZE / 16;
+//					otherY -= GuiFrame.CITY_SIZE / 16;
+//				}
+//				posX += GuiFrame.CITY_SIZE / 2;
+//				otherX -= GuiFrame.CITY_SIZE / 2; 
+//			} else {
+//				if(city.getY() > this.getY()) {
+//					posY += GuiFrame.CITY_SIZE / 16;
+//					otherY += GuiFrame.CITY_SIZE / 16;
+//				} else {
+//					posY -= GuiFrame.CITY_SIZE / 16;
+//					otherY -= GuiFrame.CITY_SIZE / 16;
+//				}
+//				posX -= GuiFrame.CITY_SIZE / 2;
+//				otherX += GuiFrame.CITY_SIZE / 2;	
+//			}
+//		} else {
+//			if(city.getY() > this.getY()) {
+//				if(city.getX() > this.getX()) {
+//					posX += GuiFrame.CITY_SIZE / 16;
+//					otherX += GuiFrame.CITY_SIZE / 16;
+//				} else {
+//					posX -= GuiFrame.CITY_SIZE / 16;
+//					otherX -= GuiFrame.CITY_SIZE / 16;
+//				}
+//				posY += GuiFrame.CITY_SIZE / 2;
+//				otherY -= GuiFrame.CITY_SIZE / 2; 
+//			} else {
+//				if(city.getX() > this.getX()) {
+//					posX += GuiFrame.CITY_SIZE / 16;
+//					otherX += GuiFrame.CITY_SIZE / 16;
+//				} else {
+//					posX -= GuiFrame.CITY_SIZE / 16;
+//					otherX -= GuiFrame.CITY_SIZE / 16;
+//				}
+//				posY -= GuiFrame.CITY_SIZE / 2;
+//				otherY += GuiFrame.CITY_SIZE / 2;	
+//			}
+//		}
+//		
 		
 		return new int[]{posX, posY, otherX, otherY};
 	}
