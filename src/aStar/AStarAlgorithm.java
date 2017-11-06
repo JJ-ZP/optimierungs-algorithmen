@@ -20,15 +20,20 @@ public class AStarAlgorithm {
 	}
 	
 	public Track solveAll() {
-		while (!openList.isEmpty() && openList.element().getCurrentCity() != targetCity) {
+		
+		Track bestTrack = null;
+				
+		while (!openList.isEmpty()) {
 			Logger.log(Level.DEBUG, "Resolving: " + openList.element().toString());
-			openList.element().resolve(openList);
+			if(openList.element().getCurrentCity().equals(targetCity)) {
+				if(bestTrack == null || bestTrack.getCosts() > openList.element().getCosts())
+					bestTrack = openList.element();
+				openList.remove(openList.element());
+			} else {
+				openList.element().resolve(openList);
+			}
 		}
-		
-		if (openList.isEmpty())
-			return null;
-		
-		return openList.element();
+		return bestTrack;
 	}
 	
 	
