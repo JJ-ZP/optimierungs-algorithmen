@@ -82,6 +82,8 @@ public class Connection extends JPanel{
 	
 	public void setPaintMode(PaintMode paintMode) {
 		this.paintMode = paintMode;
+		if (targetCity.getConnectionTo(startCity) != null)
+			targetCity.getConnectionTo(startCity).paintMode = paintMode;
 		this.repaint();
 	}
 	

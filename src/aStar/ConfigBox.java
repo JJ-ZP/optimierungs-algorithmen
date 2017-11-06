@@ -2,6 +2,7 @@ package aStar;
 
 import javax.swing.JPanel;
 import javax.swing.GroupLayout;
+import javax.swing.JButton;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
 import javax.swing.JSpinner;
@@ -19,17 +20,17 @@ import javax.swing.event.ChangeEvent;
 
 public class ConfigBox extends JPanel {
 
-	int spinnerMinimum = 1;
+	private int spinnerMinimum = 1;
 	
-	JLabel label;
-	JSpinner spinner;
-	JCheckBox checkBox;
-	JLabel label_1;
-	JSpinner spinner_1;
-	JCheckBox checkBox_1;
-	GroupLayout groupLayout;
-	SpinnerNumberModel model = new SpinnerNumberModel(1, spinnerMinimum, Integer.MAX_VALUE,1);
-	SpinnerNumberModel model2 = new SpinnerNumberModel(1, spinnerMinimum, Integer.MAX_VALUE,1);
+	private JLabel label;
+	private JSpinner spinner;
+	private JCheckBox checkBox;
+	private JLabel label_1;
+	private JSpinner spinner_1;
+	private JCheckBox checkBox_1;
+	private GroupLayout groupLayout;
+	private SpinnerNumberModel model = new SpinnerNumberModel(1, spinnerMinimum, Integer.MAX_VALUE,1);
+	private SpinnerNumberModel model2 = new SpinnerNumberModel(1, spinnerMinimum, Integer.MAX_VALUE,1);
 	
 	private City startCity;
 	private City targetCity;
