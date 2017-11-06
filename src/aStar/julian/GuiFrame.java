@@ -77,7 +77,7 @@ public class GuiFrame extends JFrame{
 				}
 			}
 		});
-		
+				
 		toolbox.addTab("Bearbeiten", buildbox);
 		toolbox.addTab("Simulieren", playbox);
 		toolbox.setFont(new Font(null, Font.PLAIN, 15));
