@@ -48,7 +48,7 @@ public class GuiFrame extends JFrame{
 		//Stuff
 		map = new JLayeredPane();
 		buildbox = new BuildBox();
-		playbox = new PlayBox();
+		playbox = new PlayBox(this);
 		toolbox = new JTabbedPane(JTabbedPane.TOP);
 		
 		map.setPreferredSize(new Dimension(10000, 10000));
@@ -70,7 +70,7 @@ public class GuiFrame extends JFrame{
 				}
 			}
 		});
-		
+				
 		toolbox.addTab("Bearbeiten", buildbox);
 		toolbox.addTab("Simulieren", playbox);
 		toolbox.setFont(new Font(null, Font.PLAIN, 15));

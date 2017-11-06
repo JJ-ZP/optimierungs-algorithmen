@@ -16,19 +16,10 @@ public class AStarAlgorithm {
 		this.startCity = startCity;
 		this.targetCity = targetCity;
 		
-		openList = new PriorityQueue<>(new Comparator<Track>() {
-
-			@Override
-			public int compare(Track t1, Track t2) {
-				if (t1.getCosts() == t2.getCosts())
-					return (t1.getCurrentCity().getDistance(targetCity) - t2.getCurrentCity().getDistance(targetCity));
-				return (t1.getCosts() - t2.getCosts());
-			}
-		});
+		reset();
 	}
 	
 	public Track solveAll() {
-		openList.add(new Track(startCity, null, 0));
 		while (!openList.isEmpty() && openList.element().getCurrentCity() != targetCity) {
 			Logger.log(Level.DEBUG, "Resolving: " + openList.element().toString());
 			openList.element().resolve(openList);
@@ -38,6 +29,36 @@ public class AStarAlgorithm {
 			return null;
 		
 		return openList.element();
+	}
+	
+	
+	public Track next() {
+		if(!openList.isEmpty()) {
+			Logger.log(Level.DEBUG, "Resolving: " + openList.element().toString());
+			Track t = openList.element();
+			if(t.getCurrentCity().equals(targetCity)) {
+				openList.removeAll(openList);
+			}else {
+				t.resolve(openList);
+			}
+			return t;
+		}else {
+			return null;
+		}
+	}
+	
+	public void reset() {
+		openList = new PriorityQueue<>(new Comparator<Track>() {
+
+			@Override
+			public int compare(Track t1, Track t2) {
+				if (t1.getCosts() == t2.getCosts())
+					return (t1.getCurrentCity().getDistance(targetCity) - t2.getCurrentCity().getDistance(targetCity));
+				return (t1.getCosts() - t2.getCosts());
+			}
+		});
+		
+		openList.add(new Track(startCity, null, 0));
 	}
 	
 	public Track getTopFromPriorityList() {
