@@ -19,6 +19,7 @@ import javax.swing.event.ChangeListener;
 import aStar.BuildBox;
 import aStar.City;
 import aStar.City.PaintMode;
+import aStar.Connection;
 import aStar.Logger;
 import aStar.Logger.Level;
 import aStar.PlayBox;
@@ -86,11 +87,16 @@ public class GuiFrame extends JFrame{
 	            } else {
 	            	EditMode.current = lastmode;
 	            	if(City.solution != null) {
-	            		City.startCity = null;
-	            		City.targetCity = null;
 	            		City.solution.unMark();
-	            		City.solution = null;
+	            	}else {
+	            		if(City.startCity != null)
+	            			City.startCity.setPaintMode(PaintMode.DEFAULT);
+	            		if(City.targetCity != null)
+	            			City.targetCity.setPaintMode(PaintMode.DEFAULT);
 	            	}
+	            	City.startCity = null;
+	            	City.targetCity = null;
+            		City.solution = null;
 	            }
 	        }
 	    });
@@ -136,6 +142,11 @@ public class GuiFrame extends JFrame{
 		
 		for (City city : cities) {
 			frame.addCity(city);
+			if(Logger.getLevel() == Level.DEBUG) {
+				for(Connection conn : city.getConnections()) {
+					Logger.log(Level.DEBUG, conn.toString());
+				}
+			}
 		}
 	}
 }

@@ -78,6 +78,9 @@ public class City extends JButton{
 					}
 					break;
 				case MOVE:
+					if(lastSelected != null) {
+						lastSelected.setPaintMode(PaintMode.DEFAULT);
+					}
 					lastSelected = City.this;
 					City.this.setPaintMode(PaintMode.SELECTED);
 					break;

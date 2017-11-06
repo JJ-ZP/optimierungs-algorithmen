@@ -110,4 +110,9 @@ public class Connection extends JPanel{
 //			g.setColor(Color.BLACK);
 //		}
 	}
+	
+	@Override
+	public String toString() {
+		return startCity.ID + " --> " + targetCity.ID + "  (" +cost+")";
+	}
 }

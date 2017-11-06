@@ -1,8 +1,5 @@
 package aStar;
 
-import javax.swing.JPanel;
-import javax.swing.JSeparator;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -10,10 +7,11 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JSeparator;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 import aStar.City.PaintMode;
-import aStar.Logger.Level;
 
 public class PlayBox extends JPanel {
 
