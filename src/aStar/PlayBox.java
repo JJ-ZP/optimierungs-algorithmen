@@ -13,6 +13,7 @@ import javax.swing.JSeparator;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 import aStar.City.PaintMode;
+import aStar.Logger.Level;
 
 public class PlayBox extends JPanel implements Runnable {
 
@@ -32,8 +33,15 @@ public class PlayBox extends JPanel implements Runnable {
 				if(City.startCity != null && City.targetCity != null) {
 					AStarAlgorithm aStar = new AStarAlgorithm(City.startCity, City.targetCity);
 					City.solution = aStar.solveAll();
-					City.solution.mark();
-					City.targetCity.setPaintMode(PaintMode.GLOW);
+					if (City.solution != null) {
+						City.solution.mark();
+						City.targetCity.setPaintMode(PaintMode.GLOW);
+						Logger.log(Level.DEBUG, "Final Track: " + City.solution.toString());
+					}
+					else {
+						JOptionPane.showMessageDialog(PlayBox.this.getParent().getParent(),
+								"Es gibt keinen Weg von Stadt " + City.startCity + " nach " + City.targetCity);
+					}
 				}else
 					JOptionPane.showMessageDialog(PlayBox.this.getParent().getParent(),
 							"Bitte wähle zuerst 2 Städte aus");

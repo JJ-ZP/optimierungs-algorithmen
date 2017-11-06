@@ -142,6 +142,7 @@ public class GuiFrame extends JFrame{
 		
 		for (City city : cities) {
 			frame.addCity(city);
+
 			if(Logger.getLevel() == Level.DEBUG) {
 				for(Connection conn : city.getConnections()) {
 					Logger.log(Level.DEBUG, conn.toString());
