@@ -60,6 +60,9 @@ public class PlayBox extends JPanel implements Runnable {
 		btnPlay.addActionListener(new ActionListener() {			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				if(City.solution != null)
+					City.solution.unMark();
+				
 				if(playThread == null || !playThread.isAlive()) {
 					playThread = new Thread(PlayBox.this);
 					frame.setEnabled(false);
@@ -181,22 +184,30 @@ public class PlayBox extends JPanel implements Runnable {
 				Track t;
 				while( (t = aStar.next()) != null ) {
 					t.mark();
-					if(!t.getCurrentCity().equals(City.targetCity)) {
-						Thread.sleep(sleepTime);
-						t.getCurrentCity().setPaintMode(PaintMode.GLOWINGTRACKS);
-						for (Connection conn : t.getCurrentCity().getConnections()) {
-							conn.setPaintMode(PaintMode.SELECTED);
-						}
-						Thread.sleep(sleepTime);
-						t.unMark();
-						for (Connection conn : t.getCurrentCity().getConnections()) {
-							conn.setPaintMode(PaintMode.DEFAULT);
-						}
-						City.startCity.setPaintMode(PaintMode.SELECTED);
-						City.targetCity.setPaintMode(PaintMode.SELECTED);
-					} else {
+				
+					Thread.sleep(sleepTime);
+					t.getCurrentCity().setPaintMode(PaintMode.GLOWINGTRACKS);
+					for (Connection conn : t.getCurrentCity().getConnections()) {
+						conn.setPaintMode(PaintMode.SELECTED);
+					}
+					Thread.sleep(sleepTime);
+					t.unMark();
+					for (Connection conn : t.getCurrentCity().getConnections()) {
+						conn.setPaintMode(PaintMode.DEFAULT);
+					}
+					City.startCity.setPaintMode(PaintMode.SELECTED);
+					City.targetCity.setPaintMode(PaintMode.SELECTED);
+					if(t.getCurrentCity().equals(City.targetCity)) {
 						City.solution = t;
 					}
+				}
+				if(City.solution == null) {
+					JOptionPane.showMessageDialog(PlayBox.this.getParent().getParent(),
+							"Es gibt keinen Weg von Stadt " + City.startCity + " nach Stadt " + City.targetCity);
+				} else {
+					City.solution.mark();
+					City.targetCity.setPaintMode(PaintMode.GLOW);
+					Logger.log(Level.DEBUG, "Final Track: " + City.solution.toString());
 				}
 				City.targetCity.setPaintMode(PaintMode.GLOW);
 			}else

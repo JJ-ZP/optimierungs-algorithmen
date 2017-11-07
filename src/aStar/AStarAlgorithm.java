@@ -11,6 +11,7 @@ public class AStarAlgorithm {
 	private PriorityQueue<Track> openList;
 	private City startCity;
 	private City targetCity;
+	private boolean finished = false;
 	
 	public AStarAlgorithm(City startCity, City targetCity) {
 		this.startCity = startCity;
@@ -38,17 +39,21 @@ public class AStarAlgorithm {
 	
 	
 	public Track next() {
+		if(finished)
+			return null;
+		
 		if(!openList.isEmpty()) {
 			Logger.log(Level.DEBUG, "Resolving: " + openList.element().toString());
 			Track t = openList.element();
-			if(t.getCurrentCity().equals(targetCity)) {
-				openList.removeAll(openList);
-			}else {
+			if(!openList.element().getCurrentCity().equals(targetCity)) {
 				t.resolve(openList);
+			}else {
+				openList.remove(openList.element());
 			}
 			return t;
 		}else {
-			return null;
+			finished = true;
+			return solveAll();
 		}
 	}
 	
@@ -63,6 +68,7 @@ public class AStarAlgorithm {
 		});
 		
 		openList.add(new Track(startCity, null, 0));
+		finished = false;
 	}
 	
 	public Track getTopFromPriorityList() {
