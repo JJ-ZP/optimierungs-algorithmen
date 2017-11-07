@@ -6,6 +6,11 @@ import java.util.PriorityQueue;
 
 import aStar.Logger.Level;
 
+/**
+ * Es wird der A* Algorithmus implementiert
+ * @author Pritzi Julian und Zöschg Jonas
+ */
+
 public class AStarAlgorithm {
 
 	private PriorityQueue<Track> openList;
@@ -21,6 +26,10 @@ public class AStarAlgorithm {
 		reset();
 	}
 	
+	/**
+	 * Es wird die Lösung berechnet.
+	 * @return Lösung
+	 */
 	public Track solveAll() {
 		
 		Track bestTrack = null;
@@ -38,7 +47,10 @@ public class AStarAlgorithm {
 		return bestTrack;
 	}
 	
-	
+	/**
+	 * Zum schrittweise erklären des Algorithmuses
+	 * @return 
+	 */
 	public Track next() {
 		if(bestSolution == null) {
 			bestSolution = solveAll();
@@ -66,6 +78,9 @@ public class AStarAlgorithm {
 		}
 	}
 	
+	/**
+	 * Die Openlist wird resetiert und die neue Startstadt festgelegt.
+	 */
 	public void reset() {
 		openList = new PriorityQueue<>(new Comparator<Track>() {
 
@@ -78,18 +93,6 @@ public class AStarAlgorithm {
 		
 		openList.add(new Track(startCity, null, 0));
 		finished = false;
-	}
-	
-	public Track getTopFromPriorityList() {
-		return openList.element();
-	}
-	
-	public ArrayList<Connection> getConnections() {
-		return openList.element().getCurrentCity().getConnections();
-	}
-	
-	public ArrayList<Track> getNewTracks() {
-		return openList.element().getNewTracks();
 	}
 	
 }

@@ -12,6 +12,12 @@ import org.junit.Test;
 import aStar.Logger.Level;
 import aStar.julian.CsvReader;
 
+/**
+ * Klasse zum testen des A* Algorithmuses
+ * @author Pritzi Julian und Zöschg Jonas
+ *
+ */
+
 public class AStarAlgorithmTest {
 
 	@BeforeClass

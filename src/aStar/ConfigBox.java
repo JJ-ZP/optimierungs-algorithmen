@@ -18,6 +18,12 @@ import aStar.City.PaintMode;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
 
+/**
+ * GUI zum bearbeiten der Verbindungen
+ * @author Pritzi Julian und Zöschg Jonas
+ *
+ */
+
 public class ConfigBox extends JPanel {
 	
 	private JLabel label;

@@ -12,6 +12,12 @@ import aStar.City.PaintMode;
 import aStar.Logger.Level;
 import aStar.julian.GuiFrame;
 
+/**
+ * Diese Klasse repräsentiert eine Verbindung zwischen zwei Städten
+ * @author Pritzi Julian und Zöschg Jonas
+ *
+ */
+
 @SuppressWarnings("serial")
 public class Connection extends JPanel{
 	private City targetCity;
@@ -29,6 +35,9 @@ public class Connection extends JPanel{
 		targetCity.isNowTargetedBy(this);
 	}
 
+	/**
+	 * Verbindung wird gelöscht und von map entfernt.
+	 */
 	public void delete() {
 		if(map != null) {
 			map.remove(this);
@@ -37,6 +46,10 @@ public class Connection extends JPanel{
 		targetCity.isNotLongerTargetedBy(this);
 	}
 	
+	/**
+	 * Verbindung wird auf map dargestellt
+	 * @param map auf der die Verbindung dargestellt wird
+	 */
 	public void displayOn(JLayeredPane map) {
 		if(this.map != null) {
 			this.map.remove(this);		
@@ -106,11 +119,6 @@ public class Connection extends JPanel{
 		}
 		
 		g.drawLine(start[0] - getX(), start[1] - getY(), start[2] - getX(), start[3] - getY());
-//		if(Logger.getLevel() == Level.DEBUG) {
-//			g.setColor(Color.GREEN);
-//			g.drawRect(0, 0, this.getWidth()-1, this.getHeight()-1);
-//			g.setColor(Color.BLACK);
-//		}
 	}
 	
 	@Override
