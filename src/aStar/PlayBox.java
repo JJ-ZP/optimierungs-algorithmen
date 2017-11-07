@@ -68,14 +68,6 @@ public class PlayBox extends JPanel implements Runnable {
 			}
 		});
 		
-		JButton btnPause = new JButton("pause");
-		
-		JButton btnNext = new JButton("next");
-		
-		JButton btnReset = new JButton("reset");
-		
-		JButton btnPrev = new JButton("prev");
-		
 		JButton btnSave = new JButton("SAVE");
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -97,6 +89,9 @@ public class PlayBox extends JPanel implements Runnable {
 		JButton btnOpen = new JButton("OPEN");
 		btnOpen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				guiFrame.map.removeAll();
+				City.currentID = 0;
+				guiFrame.map.repaint();
 				JFileChooser chooser = new JFileChooser();
 			    chooser.setFileFilter(new MyFilter(".csv"));
 			    chooser.setAcceptAllFileFilterUsed(false);
@@ -126,22 +121,16 @@ public class PlayBox extends JPanel implements Runnable {
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)
-				.addGroup(groupLayout.createSequentialGroup()
+				.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
 					.addContainerGap()
-
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(separator, GroupLayout.PREFERRED_SIZE, 126, Short.MAX_VALUE)
-						.addComponent(btnSimulate, GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
-						.addComponent(btnPlay, GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
-						.addComponent(btnPause, GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
-						.addComponent(btnNext, GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
-						.addComponent(btnReset, GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
-						.addComponent(btnPrev, GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
+						.addComponent(separator, GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addComponent(btnSave, GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE)
 							.addGap(13)
-							.addComponent(btnOpen, GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE)))
-
+							.addComponent(btnOpen, GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE))
+						.addComponent(btnPlay, GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE)
+						.addComponent(btnSimulate, GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE))
 					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
@@ -153,15 +142,7 @@ public class PlayBox extends JPanel implements Runnable {
 					.addComponent(separator, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(btnPlay)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(btnPause)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(btnNext)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(btnReset)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(btnPrev)
-					.addPreferredGap(ComponentPlacement.RELATED, 267, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED, 391, Short.MAX_VALUE)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnSave)
 						.addComponent(btnOpen))

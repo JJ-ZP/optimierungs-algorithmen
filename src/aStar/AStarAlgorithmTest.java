@@ -97,21 +97,5 @@ public class AStarAlgorithmTest {
 		
 		assertEquals(null, a.solveAll());
 	}
-	
-	@Test
-	public void test3() {
-		Logger.log(Level.INFO, "starte test3");
-		ArrayList<City> cities = null;
-		try {
-			cities = CsvReader.readCities("src/Test.csv" , ",");
-		} catch (IOException e) {
-			Logger.log(Level.ERROR, e.getMessage());
-		}
-		
-		AStarAlgorithm a = new AStarAlgorithm(cities.get(0), cities.get(5));
-		Track track = a.solveAll();
-		
-		assertEquals("0, 1, 3, 2, 5",track.toString());
-	}
 
 }

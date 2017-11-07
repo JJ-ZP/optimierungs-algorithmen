@@ -19,8 +19,6 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
 
 public class ConfigBox extends JPanel {
-
-	private int spinnerMinimum = 1;
 	
 	private JLabel label;
 	private JSpinner spinner;
@@ -29,8 +27,8 @@ public class ConfigBox extends JPanel {
 	private JSpinner spinner_1;
 	private JCheckBox checkBox_1;
 	private GroupLayout groupLayout;
-	private SpinnerNumberModel model = new SpinnerNumberModel(1, spinnerMinimum, Integer.MAX_VALUE,1);
-	private SpinnerNumberModel model2 = new SpinnerNumberModel(1, spinnerMinimum, Integer.MAX_VALUE,1);
+	private SpinnerNumberModel model = new SpinnerNumberModel(1, 1, Integer.MAX_VALUE,1);
+	private SpinnerNumberModel model2 = new SpinnerNumberModel(1, 1, Integer.MAX_VALUE,1);
 	
 	private City startCity;
 	private City targetCity;
@@ -61,10 +59,10 @@ public class ConfigBox extends JPanel {
 					label.setEnabled(true);
 					checkBox.setForeground(Color.BLACK);
 					if(targetToStart == null) {
-						targetToStart = new Connection(targetCity, startCity, spinnerMinimum);
+						targetToStart = new Connection(targetCity, startCity, 1);
 						targetCity.addConnection(targetToStart);
 						targetToStart.setPaintMode(PaintMode.SELECTED);
-						spinner.setValue(spinnerMinimum);
+						spinner.setValue(1);
 					} else {
 						spinner.setValue(targetToStart.getCost());
 					}
@@ -74,11 +72,11 @@ public class ConfigBox extends JPanel {
 					label.setEnabled(false);
 					checkBox.setForeground(new Color(128, 128, 128));
 					if(targetToStart == null) {
-						spinner.setValue(spinnerMinimum);
+						spinner.setValue(1);
 					} else {
 						targetToStart = null;
 						targetCity.removeConnection(startCity);
-						spinner.setValue(spinnerMinimum);
+						spinner.setValue(1);
 					}
 				}
 			}
@@ -104,10 +102,10 @@ public class ConfigBox extends JPanel {
 					label_1.setEnabled(true);
 					checkBox_1.setForeground(Color.BLACK);
 					if(startToTarget == null) {
-						startToTarget = new Connection(startCity, targetCity, spinnerMinimum);
+						startToTarget = new Connection(startCity, targetCity, 1);
 						startCity.addConnection(startToTarget);
 						startToTarget.setPaintMode(PaintMode.SELECTED);
-						spinner_1.setValue(spinnerMinimum);
+						spinner_1.setValue(1);
 					} else {
 						spinner_1.setValue(startToTarget.getCost());
 					}
@@ -117,11 +115,11 @@ public class ConfigBox extends JPanel {
 					label_1.setEnabled(false);
 					checkBox_1.setForeground(new Color(128, 128, 128));
 					if(startToTarget == null) {
-						spinner.setValue(spinnerMinimum);
+						spinner.setValue(1);
 					} else {
 						startToTarget = null;
 						startCity.removeConnection(targetCity);
-						spinner.setValue(spinnerMinimum);
+						spinner.setValue(1);
 					}
 				}
 			}
@@ -204,8 +202,6 @@ public class ConfigBox extends JPanel {
 	public void setCities(City startCity, City targetCity) {
 		this.startCity = startCity;
 		this.targetCity = targetCity;
-		spinnerMinimum = startCity.getDistance(targetCity);
-		System.out.println(spinnerMinimum);
 		this.checkBox_1.setText(startCity.ID + makeSpaces(startCity.ID) +
 				" --> " + makeSpaces(targetCity.ID) + targetCity.ID);
 		this.checkBox.setText(startCity.ID + makeSpaces(startCity.ID) +
@@ -217,19 +213,11 @@ public class ConfigBox extends JPanel {
 			checkBox_1.setSelected(true);
 			startToTarget.setPaintMode(PaintMode.SELECTED);
 		}
-		else {
-			model2 = new SpinnerNumberModel(spinnerMinimum, spinnerMinimum, Integer.MAX_VALUE, 1);
-			spinner_1.setModel(model2);
-		}
 		
 		if(this.targetToStart != null) {
 			spinner.setValue(targetToStart.getCost());
 			checkBox.setSelected(true);
 			targetToStart.setPaintMode(PaintMode.SELECTED);
-		}
-		else {
-			model = new SpinnerNumberModel(spinnerMinimum, spinnerMinimum, Integer.MAX_VALUE, 1);
-			spinner.setModel(model);
 		}
 		
 		this.checkBox.setEnabled(true);
