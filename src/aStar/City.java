@@ -15,6 +15,12 @@ import aStar.Logger.Level;
 import aStar.julian.EditMode;
 import aStar.julian.GuiFrame;
 
+/**
+ * Diese Klasse repräsentiert eine Stadt
+ * @author Pritzi Julian und Zöschg Jonas
+ *
+ */
+
 @SuppressWarnings("serial")
 public class City extends JButton{
 
@@ -35,9 +41,6 @@ public class City extends JButton{
 	static long currentID = 0;
 	private PaintMode paintMode = PaintMode.DEFAULT;
 	
-	
-//	private int posX;
-//	private int posY;
 	private ArrayList<Connection> connections;
 	private ArrayList<Connection> targetedBy;
 	
@@ -120,6 +123,9 @@ public class City extends JButton{
 		targetedBy.remove(conn);
 	}
 	
+	/**
+	 * Stadt wird gelöscht
+	 */
 	public void deleteCity() {
 		for (Connection connection : connections) {
 			connection.getTargetCity().removeConnection(this);
@@ -135,6 +141,10 @@ public class City extends JButton{
 		}
 	}
 	
+	/**
+	 * Die Stadt wird auf der map dargestellt
+	 * @param map auf der die Stadt dargestellt werden soll
+	 */
 	public void displayOn(JLayeredPane map) {
 		Logger.log(Level.INFO, "Füge Stadt "+this.toString()+"("+this.getX()+", "+this.getY()+") zu Map hinzu.");
 		if(this.map != null) {
@@ -149,6 +159,11 @@ public class City extends JButton{
 		}
 	}
 	
+	/**
+	 * Es wird kontrolliert ob die Stadt mit der Stadt "target" verbunden ist.
+	 * @param target
+	 * @return null falls es keine Verbindung gibt, die Verbindung falls es eine gibt
+	 */
 	public Connection getConnectionTo(City target) {
 		for (Connection connection : connections) {
 			if (connection.getTargetCity().equals(target))
@@ -156,17 +171,17 @@ public class City extends JButton{
 		}
 		return null;
 	}
-		
+	
+	/**
+	 * Entfernung zu einer anderen Stadt wird berechnet
+	 * @param city Stadt zu der de Entfernung berechnet wird
+	 * @return Entfernung zu city
+	 */
 	public int getDistance(City city){
-	/*	if (distances.containsKey(city))
-			return distances.get(city);*/
-		
 		int x = this.getX() - city.getX();
 		int y = this.getY() - city.getY();
 		
 		int distance = (int)Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
-		
-	//	distances.put(city, distance);
 		
 		return distance;
 	}
@@ -179,6 +194,10 @@ public class City extends JButton{
 		}
 	}
 	
+	/**
+	 * Verbindung zu einer bestimmten Stadt wird entfernt.
+	 * @param city Stadt zu der die Verbindung gelöscht werden soll.
+	 */
 	public void removeConnection(City city) {
 		for (Connection connection : connections) {
 			if(connection.getTargetCity().equals(city)) {
@@ -194,60 +213,10 @@ public class City extends JButton{
 	}
 		
 	public int[] getConnectionPoint(City city) {
-		//TODO: Bessere Berechnung, für schönere Verbindungen
 		int posX = getX() + GuiFrame.CITY_SIZE / 2;
 		int posY = getY() + GuiFrame.CITY_SIZE / 2;
 		int otherX = city.getX() + GuiFrame.CITY_SIZE / 2;
 		int otherY = city.getY() + GuiFrame.CITY_SIZE / 2;
-//		int deltaX = posX - otherX;
-//		int deltaY = posY - otherY;
-//		
-//		if(Math.abs(deltaX) > Math.abs(deltaY)) {
-//			if(city.getX() > this.getX()) {
-//				if(city.getY() > this.getY()) {
-//					posY += GuiFrame.CITY_SIZE / 16;
-//					otherY += GuiFrame.CITY_SIZE / 16;
-//				} else {
-//					posY -= GuiFrame.CITY_SIZE / 16;
-//					otherY -= GuiFrame.CITY_SIZE / 16;
-//				}
-//				posX += GuiFrame.CITY_SIZE / 2;
-//				otherX -= GuiFrame.CITY_SIZE / 2; 
-//			} else {
-//				if(city.getY() > this.getY()) {
-//					posY += GuiFrame.CITY_SIZE / 16;
-//					otherY += GuiFrame.CITY_SIZE / 16;
-//				} else {
-//					posY -= GuiFrame.CITY_SIZE / 16;
-//					otherY -= GuiFrame.CITY_SIZE / 16;
-//				}
-//				posX -= GuiFrame.CITY_SIZE / 2;
-//				otherX += GuiFrame.CITY_SIZE / 2;	
-//			}
-//		} else {
-//			if(city.getY() > this.getY()) {
-//				if(city.getX() > this.getX()) {
-//					posX += GuiFrame.CITY_SIZE / 16;
-//					otherX += GuiFrame.CITY_SIZE / 16;
-//				} else {
-//					posX -= GuiFrame.CITY_SIZE / 16;
-//					otherX -= GuiFrame.CITY_SIZE / 16;
-//				}
-//				posY += GuiFrame.CITY_SIZE / 2;
-//				otherY -= GuiFrame.CITY_SIZE / 2; 
-//			} else {
-//				if(city.getX() > this.getX()) {
-//					posX += GuiFrame.CITY_SIZE / 16;
-//					otherX += GuiFrame.CITY_SIZE / 16;
-//				} else {
-//					posX -= GuiFrame.CITY_SIZE / 16;
-//					otherX -= GuiFrame.CITY_SIZE / 16;
-//				}
-//				posY -= GuiFrame.CITY_SIZE / 2;
-//				otherY += GuiFrame.CITY_SIZE / 2;	
-//			}
-//		}
-//		
 		
 		return new int[]{posX, posY, otherX, otherY};
 	}
@@ -271,8 +240,6 @@ public class City extends JButton{
 	
 	@Override
 	public void paint(Graphics g) {
-		// TODO Auto-generated method stub
-		//super.paint(g);
 		switch(paintMode) {
 		case GLOW:
 			g.setColor(Color.RED);

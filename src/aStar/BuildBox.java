@@ -28,6 +28,12 @@ import javax.swing.JFileChooser;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+/**
+ * GUI zum bearbeiten der Map
+ * @author Pritzi Julian und Zöschg Jonas
+ *
+ */
+
 public class BuildBox extends JPanel {
 	
 	private JToggleButton btnMove;
