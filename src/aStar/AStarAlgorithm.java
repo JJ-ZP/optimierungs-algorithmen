@@ -12,6 +12,7 @@ public class AStarAlgorithm {
 	private City startCity;
 	private City targetCity;
 	private boolean finished = false;
+	private Track bestSolution;
 	
 	public AStarAlgorithm(City startCity, City targetCity) {
 		this.startCity = startCity;
@@ -39,21 +40,28 @@ public class AStarAlgorithm {
 	
 	
 	public Track next() {
+		if(bestSolution == null) {
+			bestSolution = solveAll();
+			if(bestSolution == null)
+				finished = true;
+		}
+		
 		if(finished)
 			return null;
 		
 		if(!openList.isEmpty()) {
 			Logger.log(Level.DEBUG, "Resolving: " + openList.element().toString());
 			Track t = openList.element();
-			if(!openList.element().getCurrentCity().equals(targetCity)) {
+			if(!t.equals(bestSolution)) {
 				t.resolve(openList);
 			}else {
-				openList.remove(openList.element());
+				finished = true;
 			}
 			return t;
 		}else {
+			reset();
 			finished = true;
-			return solveAll();
+			return bestSolution;
 		}
 	}
 	

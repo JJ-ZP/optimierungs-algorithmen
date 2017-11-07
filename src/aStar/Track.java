@@ -103,4 +103,16 @@ public class Track {
 			currentCity.setPaintMode(PaintMode.DEFAULT);
 	}
 	
+	@Override
+	public boolean equals(Object obj) {
+		if(obj instanceof Track) {
+			Track t = (Track) obj;
+			if(getCurrentCity().equals(t.getCurrentCity())){
+				return (previousTrack == null && t.previousTrack == null) ||
+						previousTrack.equals(t.previousTrack);
+			}
+		}
+		return super.equals(obj);
+	}
+	
 }
