@@ -56,7 +56,7 @@ public class CsvReader {
 						int from = hashMap.get(Integer.parseInt(elements[0]));
 						int to = hashMap.get(Integer.parseInt(elements[1]));
 						int cost = Integer.parseInt(elements[2]);
-						if (cost >= cities.get(from).getDistance(cities.get(to))) {
+						if (cost >= 1) {
 							Connection conn = new Connection(cities.get(from), cities.get(to), cost);
 							cities.get(from).addConnection(conn);
 							Logger.log(Level.DEBUG, "New Connection: -start City ID: " + cities.get(from).ID + 

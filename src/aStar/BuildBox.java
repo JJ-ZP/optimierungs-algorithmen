@@ -135,6 +135,9 @@ public class BuildBox extends JPanel {
 		tglbtnOpen = new JButton("OPEN");
 		tglbtnOpen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				guiFrame.map.removeAll();
+				City.currentID = 0;
+				guiFrame.map.repaint();
 				JFileChooser chooser = new JFileChooser();
 			    chooser.setFileFilter(new MyFilter(".csv"));
 			    chooser.setAcceptAllFileFilterUsed(false);
