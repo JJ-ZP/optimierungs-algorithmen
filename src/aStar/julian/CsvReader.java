@@ -14,6 +14,13 @@ import aStar.Connection;
 import aStar.Logger;
 import aStar.Logger.Level;
 
+/**
+ * 
+ * Zum lesen einer CSV-Datei die anschliessend als Stadtkarte interpretiert wird
+ * 
+ * @author Jonas Zöschg und Julian Pritzi
+ *
+ */
 public class CsvReader {
 	
 	private enum ReadMode {
@@ -35,6 +42,7 @@ public class CsvReader {
 				mode = ReadMode.ReadConnections;
 			
 			else if(mode == ReadMode.ReadCity) {
+				/* Staedte mit Position einlesen */
 				try {
 					int id = Integer.parseInt(elements[0]);
 					int realID;
@@ -50,6 +58,7 @@ public class CsvReader {
 					Logger.log(Level.WARNING, "Ungültiger Wert, Zeile übersprungen: "+line);
 				}
 			} else {
+				/* Verbindungen einlesen */
 				try {
 					if (hashMap.get(Integer.parseInt(elements[0])) != null && 
 							hashMap.get(Integer.parseInt(elements[1])) != null) {

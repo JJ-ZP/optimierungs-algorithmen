@@ -11,6 +11,15 @@ import java.util.ArrayList;
 
 import aStar.julian.GuiFrame;
 
+
+/**
+ * 
+ * Schreibt den Gesamten Inhalt einer Map in eine CSV-Datei,
+ * so dass diese später wieder geladen werden kann
+ * 
+ * @author julian
+ *
+ */
 public class CsvWriter 
 {
 	public static void write(String filePath , GuiFrame guiFrame) throws IOException{

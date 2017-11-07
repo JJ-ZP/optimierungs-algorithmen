@@ -4,6 +4,13 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * 
+ * Einfacher Logger fuer die Einheitliche-Ausgabe von Nachrichten
+ * 
+ * @author Julian Pritzi und Jonas Zöschg
+ *
+ */
 public class Logger {
 	
 	public enum Level{
@@ -33,6 +40,13 @@ public class Logger {
 		Logger.level = level;
 	}
 	
+	/**
+	 * 
+	 * gibt die Nachricht mit Zeitstempel aus wenn das level für die Ausgaben richtig gesetzt wurde
+	 * 
+	 * @param level wichtigkeit der Nachricht
+	 * @param s ANchricht
+	 */
 	public static void log(Level level, String s) {
 		if(level != null && level.value <= Logger.level.value) {
 			DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss SSS");

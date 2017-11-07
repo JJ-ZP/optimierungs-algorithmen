@@ -31,9 +31,17 @@ import aStar.Logger.Level;
 import aStar.PlayBox;
 import aStar.SaveOpenBox;
 
+/**
+ * 
+ * Das JFrame das, das Programm repräsentiert
+ * 
+ * @author Jonas Zöschg und Julian Pritzi
+ *
+ */
 public class GuiFrame extends JFrame{
 
 	private static final long serialVersionUID = -1087604873196301874L;
+	/* Legt die Groeße der Staedte fest */
 	public static final int CITY_SIZE = 32;
 	
 	public JLayeredPane map;
@@ -52,7 +60,6 @@ public class GuiFrame extends JFrame{
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
-		//Stuff
 		map = new JLayeredPane();
 		buildbox = new BuildBox(this);
 		playbox = new PlayBox(this);
@@ -64,6 +71,7 @@ public class GuiFrame extends JFrame{
 		map.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent me) {
+				/* Hinzufügen und Bewegen von Staedten */
 				if(EditMode.current == EditMode.ADDCITY) {
 					City c = new City(me.getX() - CITY_SIZE / 2, me.getY() - CITY_SIZE / 2);
 					c.displayOn(map);
@@ -84,7 +92,8 @@ public class GuiFrame extends JFrame{
 		
 		toolbox.addChangeListener(new ChangeListener() {
 	        public void stateChanged(ChangeEvent e) {
-	            if(toolbox.getSelectedIndex() == 1) {
+	            /* Wechselt den EditMode und entfernt sämtliche besondere Farbhervorhebungen */
+	        	if(toolbox.getSelectedIndex() == 1) {
 	            	if(EditMode.current == EditMode.MODIFYCONNECTION)
 	            		buildbox.panel.removeCities();
 	            	if(City.lastSelected != null)

@@ -36,6 +36,7 @@ public class PlayBox extends JPanel implements Runnable {
 		btnSimulate.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				/* Loesungsweg berechnen und farbig hervorheben */
 				if(City.startCity != null && City.targetCity != null) {
 					AStarAlgorithm aStar = new AStarAlgorithm(City.startCity, City.targetCity);
 					City.solution = aStar.solveAll();
@@ -63,6 +64,7 @@ public class PlayBox extends JPanel implements Runnable {
 				if(City.solution != null)
 					City.solution.unMark();
 				
+				/* 'Animation' starten */
 				if(playThread == null || !playThread.isAlive()) {
 					playThread = new Thread(PlayBox.this);
 					frame.setEnabled(false);
@@ -157,6 +159,7 @@ public class PlayBox extends JPanel implements Runnable {
 
 	@Override
 	public void run(){
+		/* Stellt den Ablauf des A*-Algorithmus grafisch dar */
 		try {
 			if(City.startCity != null && City.targetCity != null) {
 				City.startCity.setPaintMode(PaintMode.SELECTED);

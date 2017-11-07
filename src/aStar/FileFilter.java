@@ -4,6 +4,13 @@ import java.io.File;
 
 import javax.swing.filechooser.FileFilter;
 
+/**
+ * 
+ * Einfacher Filter fuer Dateien mit einer bestimmten Endung
+ * 
+ * @author Jonas Zöschg
+ *
+ */
 class MyFilter extends FileFilter {
     private String endung;
    

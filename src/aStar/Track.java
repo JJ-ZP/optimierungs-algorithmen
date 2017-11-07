@@ -6,8 +6,16 @@ import java.util.PriorityQueue;
 import aStar.City.PaintMode;
 import aStar.Logger.Level;
 
+/**
+ * 
+ * Stellt eine Weg dar
+ * 
+ * @author Jonas Zöschg und Julian Pritzi
+ *
+ */
 public class Track {
 	
+	/* Der Weg bis zu der aktuellen Stadt */
 	private Track previousTrack;
 	private City currentCity;
 	private int costs;
@@ -44,6 +52,11 @@ public class Track {
 	}
 	
 
+	/**
+	 * Auflösen des Weges mithilfe des A*-Algorithmuses
+	 * 
+	 * @param openList
+	 */
 	public void resolve(PriorityQueue<Track> openList) {
 		openList.remove(this);
 		
@@ -54,6 +67,10 @@ public class Track {
 		}
 	}
 	
+	/**
+	 * 
+	 * @return Die Wege in die sich der Weg ausbreiten koennte
+	 */
 	public ArrayList<Track> getNewTracks(){
 		ArrayList<Track> tracks = new ArrayList<>();
 		
@@ -66,6 +83,12 @@ public class Track {
 		return tracks;
 	}
 	
+	/**
+	 * Prueft ob Stadt im Weg vorkommt
+	 * 
+	 * @param city stadt die ueberprueft werden soll
+	 * @return true wenn stadt im Weg vorkommt
+	 */
 	private boolean contains (City city) {
 		if (this.currentCity.equals(city))
 			return true;
@@ -85,6 +108,9 @@ public class Track {
 			return currentCity.toString();
 	}
 	
+	/**
+	 * hebe den Weg farbig hervor
+	 */
 	public void mark() {
 		if(previousTrack != null) {
 			previousTrack.currentCity.getConnectionTo(currentCity).setPaintMode(PaintMode.GLOW);
@@ -94,6 +120,9 @@ public class Track {
 			currentCity.setPaintMode(PaintMode.GLOW);
 	}
 	
+	/**
+	 * hebe den Weg nichtmehr farbig hervor
+	 */
 	public void unMark() {
 		if(previousTrack != null) {
 			previousTrack.currentCity.getConnectionTo(currentCity).setPaintMode(PaintMode.DEFAULT);
