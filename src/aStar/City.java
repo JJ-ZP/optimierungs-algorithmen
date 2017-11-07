@@ -99,8 +99,10 @@ public class City extends JButton{
 						targetCity = City.this;
 						targetCity.setPaintMode(PaintMode.GLOW);
 					}else {
-						startCity.setPaintMode(PaintMode.DEFAULT);
-						targetCity.setPaintMode(PaintMode.DEFAULT);
+						if(startCity != null)
+							startCity.setPaintMode(PaintMode.DEFAULT);
+						if(targetCity != null)
+							targetCity.setPaintMode(PaintMode.DEFAULT);
 						startCity = null;
 						targetCity = null;
 					}

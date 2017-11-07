@@ -42,6 +42,7 @@ public class AStarAlgorithm {
 	public Track next() {
 		if(bestSolution == null) {
 			bestSolution = solveAll();
+			reset();
 			if(bestSolution == null)
 				finished = true;
 		}
