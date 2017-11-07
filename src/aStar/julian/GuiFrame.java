@@ -139,22 +139,5 @@ public class GuiFrame extends JFrame{
 		Logger.setLevel(Level.DEBUG);
 		
 		GuiFrame frame = new GuiFrame();
-		
-		/*ArrayList<City> cities = null;
-		try {
-			cities = CsvReader.readCities("src/Test.csv" , ",");
-		} catch (IOException e) {
-			Logger.log(Level.ERROR, e.getMessage());
-		}
-		
-		for (City city : cities) {
-			frame.addCity(city);
-
-			if(Logger.getLevel() == Level.DEBUG) {
-				for(Connection conn : city.getConnections()) {
-					Logger.log(Level.DEBUG, conn.toString());
-				}
-			}
-		}*/
 	}
 }
