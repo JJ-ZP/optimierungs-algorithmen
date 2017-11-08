@@ -65,11 +65,12 @@ public class AStarAlgorithm {
 		if(!openList.isEmpty()) {
 			Logger.log(Level.DEBUG, "Resolving: " + openList.element().toString());
 			Track t = openList.element();
-			if(!t.equals(bestSolution)) {
+			t.resolve(openList);
+			/*if(!t.equals(bestSolution)) {
 				t.resolve(openList);
 			}else {
 				finished = true;
-			}
+			}*/
 			return t;
 		}else {
 			reset();
